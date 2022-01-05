@@ -20,3 +20,4 @@
 ## 05-JAN-2022
 * Added Log utility 
 * Added CONF utility
+* Added JSON Payload with timestamp and Temperature data [Random values with range 30 to 100]

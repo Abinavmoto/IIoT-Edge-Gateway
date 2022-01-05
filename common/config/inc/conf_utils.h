@@ -5,5 +5,5 @@
 #include "../../log/inc/log_utils.h"
 #include <libconfig.h>
 
-int Confinit(mqtt_context *context);
+int Confinit(core_context* data, mqtt_context* context, log_context* logger);
 #endif 

@@ -88,9 +88,6 @@ int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_messa
 int MQTTPub(core_context *data, mqtt_context* context)
 {
 	int ret = 0;
-	pub_opts.onSuccess = onSend;
-	pub_opts.onFailure = onSendFailure;
-	pub_opts.context = client;
 
 	pubmsg.payload = data->payload;
 	pubmsg.payloadlen = strlen(data->payload);
@@ -114,7 +111,7 @@ void MQTTClose() {
 int MQTTinit(mqtt_context* context) {
 
 	int rc;
-
+	LOG_INFO("MQTTinit");
 	if ((rc = MQTTAsync_create(&client, context->Serverip, context->Clientid, context->persistance, NULL)) != MQTTASYNC_SUCCESS)
 	{
 		printf("Failed to create client object, return code %d\n", rc);
@@ -137,6 +134,9 @@ int MQTTinit(mqtt_context* context) {
 		printf("Failed to start connect, return code %d\n", rc);
 		return rc;
 	}
+	pub_opts.onSuccess = onSend;
+	pub_opts.onFailure = onSendFailure;
+	pub_opts.context = client;
 	// need to add Timout logic
 	while (!connected) {
 		usleep(100000L);

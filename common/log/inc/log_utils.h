@@ -3,8 +3,9 @@
 
 
 #include "logger.h"
+#include "../../mqtt/inc/mqtt_utils.h"
 
-int LogInit();
+int LogInit(int Debuglevel);
 
 
 #endif 

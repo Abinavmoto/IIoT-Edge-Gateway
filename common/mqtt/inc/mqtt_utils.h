@@ -8,15 +8,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
 #include "MQTTAsync.h"
 #include "../../log/inc/log_utils.h"
 
-#define MAX_PAYLOAD_LEN 255
+#define MAX_LEN 255
+#define MAX_PAYLOAD_LEN 65525
 
 typedef struct {
-	char Serverip[MAX_PAYLOAD_LEN];
-	char topic[MAX_PAYLOAD_LEN];
-	char Clientid[MAX_PAYLOAD_LEN];
+	char Serverip[MAX_LEN];
+	char topic[MAX_LEN];
+	char Clientid[MAX_LEN];
 	int QOS;
 	int Timeout;
 	int KeepAliveinterval;
@@ -26,13 +28,16 @@ typedef struct {
 }mqtt_context;
 
 typedef struct {
-	int prev_time;
-	int cur_time;
-	int Interval;// in millisecods
+	unsigned long long cur_time; /* milliseconds */
+	unsigned long long prev_time ; /* milliseconds */
+	char timestamp[MAX_LEN];
 	char payload[MAX_PAYLOAD_LEN];
+	int payload_Interval;/* milliseconds */
 }core_context;
 
-
+typedef struct {
+	int debuglevel;
+}log_context;
 
 
 int MQTTinit(mqtt_context* context);

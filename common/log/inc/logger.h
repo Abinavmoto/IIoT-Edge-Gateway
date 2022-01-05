@@ -101,6 +101,8 @@ void logger_flush(void);
  */
 void logger_log(LogLevel level, const char* file, int line, const char* fmt, ...);
 
+
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
