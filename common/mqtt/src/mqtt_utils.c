@@ -137,7 +137,7 @@ int MQTTinit(mqtt_context* context) {
 		printf("Failed to start connect, return code %d\n", rc);
 		return rc;
 	}
-
+	// need to add Timout logic
 	while (!connected) {
 		usleep(100000L);
 	}

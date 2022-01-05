@@ -9,7 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "MQTTAsync.h"
-
+#include "../../log/inc/log_utils.h"
 
 #define MAX_PAYLOAD_LEN 255
 

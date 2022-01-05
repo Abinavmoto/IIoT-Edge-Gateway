@@ -16,3 +16,7 @@
   * MQTT Publish
   * MQTT Callbacks
 * added Changelog 
+
+## 05-JAN-2022
+* Added Log utility 
+* Added CONF utility
