@@ -21,3 +21,6 @@
 * Added Log utility 
 * Added CONF utility
 * Added JSON Payload with timestamp and Temperature data [Random values with range 30 to 100]
+
+## 06-JAN-2022
+* Added CMAKE for Build 
