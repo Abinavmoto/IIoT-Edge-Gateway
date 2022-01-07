@@ -114,12 +114,14 @@ int MQTTinit(mqtt_context* context) {
 	LOG_INFO("MQTTinit");
 	if ((rc = MQTTAsync_create(&client, context->Serverip, context->Clientid, context->persistance, NULL)) != MQTTASYNC_SUCCESS)
 	{
+		LOG_ERROR("Failed to create client object, return code %d\n", rc);
 		printf("Failed to create client object, return code %d\n", rc);
 		return 0;
 	}
 
 	if ((rc = MQTTAsync_setCallbacks(client, NULL, connlost, messageArrived, NULL)) != MQTTASYNC_SUCCESS)
 	{
+		LOG_ERROR("Failed to set callback, return code %d\n", rc);
 		printf("Failed to set callback, return code %d\n", rc);
 		return 0;
 	}
@@ -131,6 +133,7 @@ int MQTTinit(mqtt_context* context) {
 	conn_opts.context = client;
 	if ((rc = MQTTAsync_connect(client, &conn_opts)) != MQTTASYNC_SUCCESS)
 	{
+		LOG_ERROR("Failed to start connect, return code %d\n", rc);
 		printf("Failed to start connect, return code %d\n", rc);
 		return rc;
 	}

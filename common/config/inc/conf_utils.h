@@ -5,5 +5,5 @@
 #include "../../log/inc/log_utils.h"
 #include <libconfig.h>
 
-int Confinit(core_context* data, mqtt_context* context, log_context* logger);
+int Confinit(core_context* data, mqtt_context* context, log_context* logger , char* Confpath);
 #endif 

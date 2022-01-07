@@ -24,3 +24,10 @@
 
 ## 06-JAN-2022
 * Added CMAKE for Build 
+
+## 07-JAN-2022
+* Added CMAKE for GTest 
+* Added Test for the Utils
+* Made changes to the Conf File input
+	*Path to conf file should be given in console
+*Removed Logger and combined to log_utils for ease of project structure

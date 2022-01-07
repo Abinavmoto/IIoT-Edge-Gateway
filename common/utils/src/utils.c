@@ -24,7 +24,9 @@ int gettime(core_context* data)
     data->cur_time = now.tv_sec * 1000 + now.tv_usec / 1000;
     //getTimestamp(&now, data->timestamp, sizeof(data->timestamp));
     //printf("\nThis program has been writeen at (date and time): %s", ctime(&t));
+    //LOG_DEBUG("Get Payload");
     strcpy(data->timestamp, ctime(&t));
+    return EXIT_SUCCESS;
 }
 
 int getPayload(core_context* data, mqtt_context* context)

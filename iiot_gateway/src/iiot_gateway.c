@@ -3,12 +3,12 @@
 core_context core_ctx;
 mqtt_context mqtt_ctx;
 log_context log_ctx;
-int core_Init()
+int core_Init(char *Confpath)
 {
 	int ret = 0;
 	//Read CONF file
 	
-	ret = Confinit(&core_ctx,&mqtt_ctx,&log_ctx);
+	ret = Confinit(&core_ctx,&mqtt_ctx,&log_ctx,Confpath);
 	if (ret == -1) {
 		return(EXIT_FAILURE); 
 	}
@@ -46,12 +46,20 @@ int core_routine() {
 
 
 
-int main()
-{
+int main(int argc, char* argv[]) {
+
+	char confpath[MAX_LEN];
+	if (argc == 1) {
+		printf("\nPlease Specify conf.cfg location\n");
+		return EXIT_FAILURE;
+	}
+	if (argc == 2)
+		strcpy(confpath, argv[1]);
+	
 	//is config file present check needs to be added
 	int ret = 0; 
 	// Init all the Neccesary Preconditions
-	ret = core_Init();
+	ret = core_Init(confpath);
 	//Main routine for the Application to run upon
 	while (1) {
 		core_routine();

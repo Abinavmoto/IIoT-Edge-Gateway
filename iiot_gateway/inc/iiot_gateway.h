@@ -6,7 +6,7 @@
 #include "../../common/config/inc/conf_utils.h"
 #include "../../common/utils/inc/utils.h"
 
-int core_Init();
+int core_Init(char* Confpath);
 int core_routine();
 
 

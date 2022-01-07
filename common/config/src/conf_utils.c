@@ -7,7 +7,7 @@ To run     : ./config
 #include "../inc/conf_utils.h"
 
 
-int Confinit(core_context* data, mqtt_context* context, log_context* logger)
+int Confinit(core_context* data, mqtt_context* context, log_context* logger, char* Confpath)
 {
     config_t cfg;               /*Returns all parameters in this structure */
     config_setting_t* MQTTsetting;
@@ -20,7 +20,7 @@ int Confinit(core_context* data, mqtt_context* context, log_context* logger)
     printf("\ninit configuration file.");
 
     /* Read the file. If there is an error, report it and exit. */
-    if (!config_read_file(&cfg, "common/config/conf.cfg"))
+    if (!config_read_file(&cfg, Confpath))
     {
         printf("\n%s:%d - %s", config_error_file(&cfg), config_error_line(&cfg), config_error_text(&cfg));
         config_destroy(&cfg);

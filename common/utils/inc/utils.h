@@ -7,6 +7,7 @@
 #include "../../mqtt/inc/mqtt_utils.h"
 
 
+
 int getPayload(core_context* data, mqtt_context* context);
 int Randoms(int lower, int upper);
 int gettime(core_context* data);
