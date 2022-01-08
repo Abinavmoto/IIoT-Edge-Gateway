@@ -370,20 +370,25 @@ void logger_log(LogLevel level, const char* file, int line, const char* fmt, ...
     }
     unlock();
 }
+/*LOGGER DETAILS 
+* Usecases for logger
+LOG_DEBUG("format example: %d%c%s", 1, '2', "3");
+LOG_TRACE("trace");
+LOG_DEBUG("degug");
+LOG_INFO("info");
+LOG_WARN("warn");
+LOG_ERROR("error");
+LOG_FATAL("fatal"); 
 
+maxBackupFiles - Back up 5 files if the log file sized is exceeded
+
+*/
 
 int LogInit(int Debuglevel) {
     int ret = 0;
 
-    ret = logger_initFileLogger("log.txt", 1024 * 1024, 5); //filename,maxFileSize,maxBackupFiles)
+    ret = logger_initFileLogger("log.txt", 1024 * 1024, 5); //filename,maxFileSize,maxBackupFiles
     logger_setLevel(Debuglevel);
-    LOG_INFO("file logging Started");
-    //LOG_DEBUG("format example: %d%c%s", 1, '2', "3");
-    //LOG_TRACE("trace");
-    //LOG_DEBUG("degug");
-    //LOG_INFO("info");
-    //LOG_WARN("warn");
-    //LOG_ERROR("error");
-    //LOG_FATAL("fatal"); 
+    LOG_INFO("\n\n File logging Started \n\n");
     return ret;
 }

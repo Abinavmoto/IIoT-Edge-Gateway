@@ -1,8 +1,3 @@
-/*config.c*/
-/*
-To compile : gcc -o config config.c -lconfig
-To run     : ./config
-*/
 
 #include "../inc/conf_utils.h"
 
@@ -17,7 +12,7 @@ int Confinit(core_context* data, mqtt_context* context, log_context* logger, cha
     int debug;
     /*Initialization */
     config_init(&cfg);
-    printf("\ninit configuration file.");
+    printf("\n\nInit configuration file \n");
 
     /* Read the file. If there is an error, report it and exit. */
     if (!config_read_file(&cfg, Confpath))
@@ -32,12 +27,12 @@ int Confinit(core_context* data, mqtt_context* context, log_context* logger, cha
         strcpy(context->Serverip, str1);
         strcpy(context->topic, str2);
         strcpy(context->Clientid, str3);
-        printf("\nBasic configuration for MQTT: %s %s %s", context->Serverip, context->topic, context->Clientid);
+        printf("\n\n Basic configuration for MQTT: %s \n %s \n %s \n\n", context->Serverip, context->topic, context->Clientid);
         //printf("\nFile Type: %s", str1);
     }
         
     else
-        printf("\nNo  setting in configuration file.");
+        printf("\n\n No setting in configuration file Error \n");
 
 
     /*Read the parameter group*/
@@ -48,10 +43,10 @@ int Confinit(core_context* data, mqtt_context* context, log_context* logger, cha
         if (config_setting_lookup_int(MQTTsetting, "QOS", &context->QOS) && config_setting_lookup_int(MQTTsetting, "Timeout", &context->Timeout) && config_setting_lookup_int(MQTTsetting, "KeepAliveinterval", &context->KeepAliveinterval)
             && config_setting_lookup_int(MQTTsetting, "cleansession", &context->cleansession) && config_setting_lookup_int(MQTTsetting, "persistance", &context->persistance)&& config_setting_lookup_int(MQTTsetting, "retained", &context->retained))
         {
-            printf("\nMQTTParams: QOS: %d Timeout: %d KeepAlive: %d Cleansession:%d Persistance: %d Retain: %d", context->QOS, context->Timeout, context->KeepAliveinterval, context->cleansession, context->persistance, context->retained);
+            printf("\n\n MQTTParams: QOS: %d \n Timeout: %d \n KeepAlive: %d \n Cleansession:%d \n Persistance: %d \n Retain: %d \n\n", context->QOS, context->Timeout, context->KeepAliveinterval, context->cleansession, context->persistance, context->retained);
         }
         else
-            printf("\nNo 'nMQTTParam' setting in configuration file. and err");
+            printf("\n\n No 'nMQTTParam' setting in configuration file Error \n\n");
     }
     /*Read the parameter group*/
     Payloadsetting = config_lookup(&cfg, "PayloadParams");
@@ -60,10 +55,10 @@ int Confinit(core_context* data, mqtt_context* context, log_context* logger, cha
         /*Read the integer*/
         if (config_setting_lookup_int(Payloadsetting, "PayloadInterval", &data->payload_Interval))
         {
-        printf("\nPayloadParams: PayloadInterval: %d ", data->payload_Interval);
+        printf("\n\n PayloadParams: PayloadInterval: %d \n\n", data->payload_Interval);
         }
         else
-            printf("\nNo 'nPayloadParams' setting in configuration file. and err");
+            printf("\n\n No 'nPayloadParams' setting in configuration file Error \n\n");
     }
     ///*Read the parameter group*/
     logsetting = config_lookup(&cfg, "LogParams");
@@ -74,10 +69,10 @@ int Confinit(core_context* data, mqtt_context* context, log_context* logger, cha
         /*Read the integer*/
         if (config_setting_lookup_int(logsetting, "LOGLEVEL", &logger->debuglevel))
         {
-        printf("\nLogParams: Debuglevel: %d ",logger->debuglevel);
+        printf("\n\n LogParams: Debuglevel: %d \n\n",logger->debuglevel);
         }
         else
-            printf("\nNo 'LogParams' setting in configuration file. and err");
+            printf("\n\n No 'LogParams' setting in configuration file Error \n\n");
     }
     config_destroy(&cfg);
     return 1;

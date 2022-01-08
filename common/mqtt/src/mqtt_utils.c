@@ -18,14 +18,18 @@ void connlost(void *context, char *cause)
 	int rc;
 
 	printf("\nConnection lost\n");
+	LOG_DEBUG("\nConnection lost\n");
 	printf("     cause: %s\n", cause);
+	LOG_DEBUG("     cause: %s\n", cause);
 
 	printf("Reconnecting\n");
+	LOG_DEBUG("Reconnecting\n");
 	conn_opts.keepAliveInterval = 20;
 	conn_opts.cleansession = 1;
 	if ((rc = MQTTAsync_connect(client, &conn_opts)) != MQTTASYNC_SUCCESS)
 	{
 		printf("Failed to start connect, return code %d\n", rc);
+		LOG_DEBUG("Failed to start connect, return code %d\n", rc);
  		finished = 1;
 	}
 }
@@ -33,12 +37,14 @@ void connlost(void *context, char *cause)
 void onDisconnectFailure(void* context, MQTTAsync_failureData* response)
 {
 	printf("Disconnect failed\n");
+	LOG_DEBUG("\n Disconnect failed \n");
 	finished = 1;
 }
 
 void onDisconnect(void* context, MQTTAsync_successData* response)
 {
 	printf("Successful disconnection\n");
+	LOG_INFO("\n MQTT Successful disconnection \n");
 	finished = 1;
 }
 
@@ -55,6 +61,7 @@ void onSendFailure(void* context, MQTTAsync_failureData* response)
 	if ((rc = MQTTAsync_disconnect(client, &opts)) != MQTTASYNC_SUCCESS)
 	{
 		printf("Failed to start disconnect, return code %d\n", rc);
+		LOG_ERROR(" MQTT Failed to start disconnect, return code % d\n", rc);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -68,6 +75,7 @@ void onSend(void* context, MQTTAsync_successData* response)
 void onConnectFailure(void* context, MQTTAsync_failureData* response)
 {
 	printf("Connect failed, rc %d\n", response ? response->code : 0);
+	LOG_ERROR("\nConnect failed, rc % d\n", response ? response->code : 0);
 	finished = 1;
 }
 
@@ -75,11 +83,13 @@ void onConnectFailure(void* context, MQTTAsync_failureData* response)
 void onConnect(void* context, MQTTAsync_successData* response)
 {
 	printf("Successful connection\n");
+	LOG_INFO("\n MQTT Successful connection \n");
 	connected = 1;
 }
 
 int messageArrived(void* context, char* topicName, int topicLen, MQTTAsync_message* m)
 {
+	//ADD Subcriber logic
 	/* not expecting any messages */
 	return 1;
 }
@@ -99,7 +109,7 @@ int MQTTPub(core_context *data, mqtt_context* context)
 		printf("Failed to start sendMessage, return code %d\n", ret);
 		return ret;
 	}
-	printf("Published \n");
+	LOG_INFO("\n MQTT Data Published to %s !! \n", context->topic);
 	return ret;
 
 }
@@ -111,7 +121,7 @@ void MQTTClose() {
 int MQTTinit(mqtt_context* context) {
 
 	int rc;
-	LOG_INFO("MQTTinit");
+	LOG_INFO("\n MQTTinit Started \n");
 	if ((rc = MQTTAsync_create(&client, context->Serverip, context->Clientid, context->persistance, NULL)) != MQTTASYNC_SUCCESS)
 	{
 		LOG_ERROR("Failed to create client object, return code %d\n", rc);

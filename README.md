@@ -112,12 +112,13 @@ To deploy this project run ,run the following command in the build/bin folder
 
 ## Demo
 
+![ScreenShot](/Screenshots/IIoT_Gateway_console.png)
 
-
+![ScreenShot](/Screenshots/Log_File.PNG)
 
 ## Optimizations
 
-- Add ACK Mechanism from SUB client for reducing the loss of data
+- Add ACK Mechanism from SUB client for adressing data loss 
 
 
 

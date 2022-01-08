@@ -6,6 +6,7 @@
 #include <time.h>
 #include <sys/time.h>
 
+#define MILLISECOND 1000
 
 int Randoms(int lower, int upper)
 {
@@ -21,37 +22,38 @@ int gettime(core_context* data)
     time(&t);
     struct timeval now;
     gettimeofday(&now, NULL);
-    data->cur_time = now.tv_sec * 1000 + now.tv_usec / 1000;
+    data->cur_time = now.tv_sec * MILLISECOND + now.tv_usec / MILLISECOND;
     //getTimestamp(&now, data->timestamp, sizeof(data->timestamp));
-    //printf("\nThis program has been writeen at (date and time): %s", ctime(&t));
     //LOG_DEBUG("Get Payload");
     strcpy(data->timestamp, ctime(&t));
+    //printf("%s", data->timestamp);
     return EXIT_SUCCESS;
 }
 
 int getPayload(core_context* data, mqtt_context* context)
 {
     json_object* root = json_object_new_object();
-    LOG_DEBUG("Get Payload");
-    printf("Get payload");
+    //printf("Get payload");
     if (!root)
-        return EXIT_FAILURE;
+        return 0;
+    // terminating the EOF
+    data->timestamp[strlen(data->timestamp) - 1] = '\0';
 
-    // basic data
+    // adding basic data to JSON Format
     json_object_object_add(root, "Client_ID", json_object_new_string(context->Clientid));
     json_object_object_add(root, "Publish_Topic", json_object_new_string(context->topic));
-    json_object_object_add(root, "Temperature_Sensor", json_object_new_int(Randoms(30,100)));
-    // Timestamp json
-    json_object* timeStamp = json_object_new_object();
-    json_object_object_add(timeStamp, "Time_Stamp", json_object_new_string(data->timestamp));
-    json_object_object_add(timeStamp, "Payload_Interval", json_object_new_int(data->payload_Interval));
-    json_object_object_add(root, "TimeStamp", timeStamp);
+    json_object_object_add(root, "Time_Stamp", json_object_new_string(data->timestamp));
+    // Adding Sensor data
+    json_object* sensor_data = json_object_new_object();
+    json_object_object_add(sensor_data, "Temperature_Sensor", json_object_new_int(Randoms(30, 100)));
+    json_object_object_add(sensor_data, "Interval", json_object_new_int(data->payload_Interval));//in milliseconds
+    json_object_object_add(root, "Sensor_data", sensor_data);
 
-    // Copy json payload
-    printf("The json representation:\n\n%s\n\n", json_object_to_json_string_ext(root, JSON_C_TO_STRING_PRETTY));
+    // Copy json payload 
+    printf("The json representation:\n\n %s \n\n ", json_object_to_json_string_ext(root, JSON_C_TO_STRING_PRETTY));
     strcpy(data->payload, json_object_to_json_string_ext(root, JSON_C_TO_STRING_PRETTY));
-    LOG_DEBUG("%s", data->payload);
+    LOG_DEBUG("\n\n %s \n\n", data->payload);
     // cleanup and exit
     json_object_put(root);
-    return EXIT_SUCCESS;
+    return 1;
 }

@@ -10,21 +10,23 @@ int core_Init(char *Confpath)
 	
 	ret = Confinit(&core_ctx,&mqtt_ctx,&log_ctx,Confpath);
 	if (ret == -1) {
-		return(0); 
+		return(ERR);
 	}
 	//Initialize logger
 
 	ret = LogInit(log_ctx.debuglevel);
 	if (ret ==0) {
-		return(0);
+		return(ERR);
 	}
+	LOG_INFO("IIoT Gateway Started !! \n");
 	//initialise the MQTT Client
 
 	ret = MQTTinit(&mqtt_ctx);
 	if (ret != 0) {
-		return(0);
+		return(ERR);
 	}
-	return(1);
+	LOG_INFO("\n MQTT Client Initialized !! \n");
+	return(SUCC);
 }
 
 int core_routine() {
@@ -33,12 +35,14 @@ int core_routine() {
 	if (core_ctx.cur_time - core_ctx.prev_time > core_ctx.payload_Interval)
 	{
 		core_ctx.prev_time = core_ctx.cur_time;
-		LOG_INFO("Interval elapsed");
-		getPayload(&core_ctx, &mqtt_ctx);
-		ret = MQTTPub(&core_ctx, &mqtt_ctx);
-		if (ret != 0) 
+		ret = getPayload(&core_ctx, &mqtt_ctx);
+		if (ret) {
+			ret = MQTTPub(&core_ctx, &mqtt_ctx);
+			if (ret != MQTTERR)
+				return ret;
+		}
+		else
 			return ret;
-		
 	}
 	return ret;
 }
@@ -46,6 +50,8 @@ int core_routine() {
 
 
 int main(int argc, char* argv[]) {
+
+	
 
 	char confpath[MAX_LEN];
 	if (argc == 1) {

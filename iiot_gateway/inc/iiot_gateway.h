@@ -7,6 +7,10 @@
 #include "../../common/utils/inc/utils.h"
 #include <assert.h>
 
+#define MQTTERR 0
+#define ERR 1
+#define SUCC 1
+
 int core_Init(char* Confpath);
 int core_routine();
 

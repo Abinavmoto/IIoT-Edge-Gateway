@@ -37,3 +37,6 @@
 * Added Test for the logger
 * Updates in the Readme 
 * Changes in CMAKE for creating bin folder for ease of access 
+* Made cleanups to the project
+* Added Demo screenshots
+* Added Software design document
