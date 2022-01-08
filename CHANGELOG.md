@@ -35,3 +35,5 @@
 
 ## 08-JAN-2022
 * Added Test for the logger
+* Updates in the Readme 
+* Changes in CMAKE for creating bin folder for ease of access 

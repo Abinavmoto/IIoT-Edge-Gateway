@@ -4,8 +4,6 @@
 A  IIoT Gateway are wirelessly connected to the global Internet, collecting data from all aspects of a process and sharing it with a central server. This data enables analysis and action that has been heretofore unseen, resulting in increased efficiency and productivity
 
 
-
-
 ## Use Cases
 
  - Predictive maintenance/analytics
@@ -19,22 +17,48 @@ A  IIoT Gateway are wirelessly connected to the global Internet, collecting data
 - Secured data transfer
 
 
-## Tech Stack
+## LIB Stack
 
-**Client:** Paho Mqtt, libjson,..
+**Client:** Paho Mqtt C Client, json-c, GTest, libconfig , CMake
 
-**Server:** Paho MQTT Server(test.mosquitto.org)
+**Server:** Mosquitto Server -[mqtt.eclipseprojects.io]
 
 
-## Environment Variables
+## Environment 
 
-## Installation
+**OS:** Ubuntu 20.04 LTS
 
-Install my-project 
+**IDE:** Visual Studio
+
+
+## Library Installation 
+
+**Paho Mqtt C:** [Link to Paho C Client Installation](https://github.com/eclipse/paho.mqtt.c)
+
+**Json-c:** [Link to Json Library](https://github.com/json-c/json-c)
+
+**Config:** [Link to Config Library](https://hyperrealm.github.io/libconfig/libconfig_manual.html)
+
+**GTest:**
+
+Install GTest 
 
 ```bash
-   install my-project
-   cd my-project
+   sudo apt-get install libgtest-dev
+   cd /usr/src/gtest
+   sudo cmake CMakeLists.txt
+   sudo make
+ 
+   # copy or symlink libgtest.a and libgtest_main.a to your /usr/lib folder
+   sudo cp *.a /usr/lib
+```
+
+**CMake:**
+
+Install CMake 
+
+```bash
+   sudo apt-get install cmake
 ```
     
 ## Documentation
@@ -44,46 +68,45 @@ Install my-project
 
 ## Run Locally
 
-Clone the project
+- Install library dependencies mentioned above before getting started!! 
+
+- Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/Abinavmoto/IIoT-Edge-Gateway.git
 ```
 
-Go to the project directory
+- Go to the project directory and create build folder
 
 ```bash
-  cd my-project
+  cd IIoT-Edge-Gateway
+  sudo mkdir build
+  cd build/
 ```
 
-Install dependencies
+- Run CMake and make 
 
 ```bash
-   install
+   sudo cmake ..
+   sudo make
 ```
-
-Start the server
-
-```bash
-   run start
-```
-
 
 ## Running Tests
 
-To run tests, run the following command
+To run tests, run the following command in the build/bin folder
 
 ```bash
-  
+   ./runTest
 ```
 
 
 ## Deployment
 
-To deploy this project run
+To deploy this project run ,run the following command in the build/bin folder
 
 ```bash
-  
+   # Arguments - path to conf file
+   ./MQTTPUB_CMAKE ../../common/config/conf.cfg
 ```
 
 
@@ -94,16 +117,20 @@ To deploy this project run
 
 ## Optimizations
 
+- Add ACK Mechanism from SUB client for reducing the loss of data
 
 
 
 ## Roadmap
 
-- Way ahead
+- Add SSL Certifications
+- Incorporate Subscriber Actions
+- Create a Docker image for ease of deployment
 
 
 
 ## 🚀 About Me
 
+- [LinkedIN](https://www.linkedin.com/in/abinavramesh/)
 
-
+- [GitHub](https://github.com/Abinavmoto)
