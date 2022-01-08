@@ -46,7 +46,7 @@ TEST(Confinit, Check_configfile) {
 	core_context data_test;
 	mqtt_context context_test;
 	log_context logger_test;
-	char path[] = "test/conf.cfg";
+	char path[] = "../../test/conf.cfg";
 	Confinit(&data_test,& context_test, &logger_test,path);
 	ASSERT_STREQ(context_test.Clientid, "DEMOClient");
 }
