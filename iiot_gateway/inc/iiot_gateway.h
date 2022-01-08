@@ -5,6 +5,7 @@
 #include "../../common/mqtt/inc/mqtt_utils.h"
 #include "../../common/config/inc/conf_utils.h"
 #include "../../common/utils/inc/utils.h"
+#include <assert.h>
 
 int core_Init(char* Confpath);
 int core_routine();

@@ -50,6 +50,54 @@ TEST(Confinit, Check_configfile) {
 	Confinit(&data_test,& context_test, &logger_test,path);
 	ASSERT_STREQ(context_test.Clientid, "DEMOClient");
 }
+TEST(logger_initFileLogger,Check_LoggerinitFailed)
+{
+    int result;
+
+    /* when: configure the empty filename */
+    result = logger_initFileLogger("", 0, 0);
+
+    /* then: failed */
+    ASSERT_EQ(0, result);
+}
+
+TEST(logger_initFileLogger, Check_fileLogger)
+{
+    char test_filename[] = "file.log";
+    const char message[] = "Test";
+    int result;
+    FILE* fp;
+    char line[256];
+    int count = 0;
+
+    /* when: initialize file logger */
+    result = logger_initFileLogger(test_filename, 0, 0);
+
+    /* then: ok */
+    ASSERT_EQ(1, result);
+
+    /* when: output to the file */
+    LOG_TRACE(message);
+    LOG_DEBUG(message);
+    LOG_INFO(message);
+    logger_flush();
+
+    /* then: write only one line */
+    if ((fp = fopen(test_filename, "r")) == NULL) {
+        FAIL();
+    }
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        line[strlen(line) - 1] = '\0'; /* remove LF */
+        ASSERT_EQ('I', line[0]);
+        ASSERT_STREQ(message, &line[strlen(line) - strlen(message)]);
+        count++;
+    }
+    ASSERT_EQ(1, count);
+
+    /* cleanup: close resources */
+    fclose(fp);
+    remove(test_filename);
+}
 
 
 int main(int argc, char **argv) {

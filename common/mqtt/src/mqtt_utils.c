@@ -116,14 +116,14 @@ int MQTTinit(mqtt_context* context) {
 	{
 		LOG_ERROR("Failed to create client object, return code %d\n", rc);
 		printf("Failed to create client object, return code %d\n", rc);
-		return 0;
+		return rc;
 	}
 
 	if ((rc = MQTTAsync_setCallbacks(client, NULL, connlost, messageArrived, NULL)) != MQTTASYNC_SUCCESS)
 	{
 		LOG_ERROR("Failed to set callback, return code %d\n", rc);
 		printf("Failed to set callback, return code %d\n", rc);
-		return 0;
+		return rc;
 	}
 
 	conn_opts.keepAliveInterval = context->KeepAliveinterval;
