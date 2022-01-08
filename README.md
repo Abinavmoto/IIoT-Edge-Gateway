@@ -63,7 +63,7 @@ Install CMake
     
 ## Documentation
 
-[Documentation](https://linktodocumentation)
+[Documentation](https://github.com/Abinavmoto/IIoT-Edge-Gateway/blob/main/docs/IIoT%20Gateway%20project%20doc.pdf)
 
 
 ## Run Locally
@@ -112,7 +112,7 @@ To deploy this project run ,run the following command in the build/bin folder
 
 ## Demo
 
-![ScreenShot](/Screenshots/IIoT_Gateway_console.png)
+![ScreenShot](/Screenshots/IIoT_Gateway_console.PNG)
 
 ![ScreenShot](/Screenshots/Log_File.PNG)
 
