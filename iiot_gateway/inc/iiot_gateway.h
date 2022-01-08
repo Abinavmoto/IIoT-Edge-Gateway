@@ -8,7 +8,7 @@
 #include <assert.h>
 
 #define MQTTERR 0
-#define ERR 1
+#define ERR 0
 #define SUCC 1
 
 int core_Init(char* Confpath);
